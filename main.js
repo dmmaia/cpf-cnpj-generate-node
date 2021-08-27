@@ -11,6 +11,23 @@ function calcDigit(cnpj, numbers){
     return digitDigit
 }
 
+function validateCNPJ(cnpj){
+    const firsMultiplicationNumbers = [5,4,3,2,9,8,7,6,5,4,3,2]
+    const secondMultiplicationNumbers = [6, ...firsMultiplicationNumbers]
+    
+    const lastTwoDigits = cnpj.replaceAll(/(\.|\/|-)/g, '').slice(-2)
+    const stripedCNPJArr = cnpj.replaceAll(/(\.|\/|-)/g, '').slice(0, -2).split('')
+
+    const firstDigit = calcDigit(stripedCNPJArr,firsMultiplicationNumbers)
+    const secondDigit = calcDigit([...stripedCNPJArr, firstDigit],secondMultiplicationNumbers)
+    console.log(firstDigit,secondDigit)
+    if (lastTwoDigits[0] == firstDigit && lastTwoDigits[1] == secondDigit) {
+        return true
+    } else {
+        return false
+    }
+}
+
 function generateCNPJ(){
     const firsMultiplicationNumbers = [5,4,3,2,9,8,7,6,5,4,3,2]
     const secondMultiplicationNumbers = [6, ...firsMultiplicationNumbers]
